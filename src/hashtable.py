@@ -51,14 +51,15 @@ class HashTable:
 
         Fill this in.
         '''
+
         insert_in_key = self._hash_mod(key)
-        
+
         if self.storage[insert_in_key] != None:
             print("Error") 
             return
         else: 
             self.storage[insert_in_key] = value
-
+        
 
     def remove(self, key):
         '''
