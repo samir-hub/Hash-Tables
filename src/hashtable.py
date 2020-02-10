@@ -51,8 +51,8 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
-
+        insert_in_key = self._hash_mod(key)
+        self.storage[insert_in_key] = value
 
 
     def remove(self, key):
@@ -63,7 +63,7 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        if key in self.
 
 
     def retrieve(self, key):
