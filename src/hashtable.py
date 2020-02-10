@@ -52,7 +52,11 @@ class HashTable:
         Fill this in.
         '''
         insert_in_key = self._hash_mod(key)
-        self.storage[insert_in_key] = value
+        if self.storage[insert_in_key] != None:
+            print("Error") 
+            return
+        else: 
+            self.storage[insert_in_key] = value
 
 
     def remove(self, key):
@@ -63,7 +67,11 @@ class HashTable:
 
         Fill this in.
         '''
-        if key in self.
+        if self.storage[key] == None: 
+            print("Key not found.")
+            return
+        else: 
+            self.storage[key] = None    
 
 
     def retrieve(self, key):
@@ -74,7 +82,11 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        if self.storage[key] == None: 
+            print("None")
+            return
+        else: 
+            return self.storage[key]    
 
 
     def resize(self):
