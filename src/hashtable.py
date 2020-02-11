@@ -52,14 +52,25 @@ class HashTable:
         Fill this in.
         '''
 
-        insert_in_key = self._hash_mod(key)
+        if self.capacity == len(self.storage):
+            self.resize()
 
-        if self.storage[insert_in_key] != None:
-            print("Error") 
-            return
-        else: 
-            self.storage[insert_in_key] = value
-        
+        new_linked_pair = LinkedPair(key, value)
+
+        index = self._hash_mod(key)
+
+        if self.storage[index] is not None:
+            current = self.storage[index]
+            while current: 
+                current = self.storage[index].next
+            current = new_linked_pair  
+      
+        else:
+            self.storage[index] = new_linked_pair
+
+        return
+
+
 
     def remove(self, key):
         '''
@@ -69,13 +80,18 @@ class HashTable:
 
         Fill this in.
         '''
-        insert_in_key = self._hash_mod(key)
+        index = self._hash_mod(key)
 
-        if self.storage[insert_in_key] == None: 
-            print("Key not found.")
-            return
-        else: 
-            self.storage[insert_in_key] = None    
+        if self.storage[index] is not None:
+            if self.storage[index].key == key:
+                self.storage[index] = None
+            else:
+                print(f"WARNING:  Collision has occured at {index}")
+
+        else:
+            print(f"Warning key ({key}) not found.")
+
+        return
 
 
     def retrieve(self, key):
@@ -86,13 +102,21 @@ class HashTable:
 
         Fill this in.
         '''
-        insert_in_key = self._hash_mod(key)
+        index = self._hash_mod(key)
 
-        if self.storage[insert_in_key] == None: 
-            print("None")
-            return
-        else: 
-            return self.storage[insert_in_key]    
+        if self.storage[index] is not None:
+            if self.storage[index].key == key:
+                return self.storage[index].value
+            else:
+                current = self.storage[index]
+                while current: 
+                    if current.key == key:
+                        return current.value
+                    current = self.storage[index].next
+        else:
+            return None
+
+        return
 
 
     def resize(self):
@@ -102,16 +126,27 @@ class HashTable:
 
         Fill this in.
         '''
+        old_storage = self.storage
         self.capacity *= 2
-        new_storage = self.capacity * [None]
+        self.storage = [None] * self.capacity
 
-        for i in range(len(self.storage)):
-            new_storage[i] = self.storage[i]
-        self.storage = new_storage    
+        for item in old_storage:
+            if item == None or item == None:
+                pass
+            else: 
+                self.insert(item.key, item.value)
 
 
 
 if __name__ == "__main__":
+    #ht1 = HashTable(2)
+
+    #ht1.insert("key1", "hello")
+    #ht1.insert("unicorn", "goodbye")
+    #ht1.remove("key1")
+
+    #print(ht1.storage)
+
     ht = HashTable(2)
 
     ht.insert("line_1", "Tiny hash table")
